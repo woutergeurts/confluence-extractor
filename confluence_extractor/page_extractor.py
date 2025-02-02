@@ -2,9 +2,9 @@
 from atlassian import Confluence
 import logging
 
-from src.xml2md import Xml2Md
-from src.page import Page
-from src.config import Config
+from confluence_extractor.xml2md import Xml2Md
+from confluence_extractor.page import Page
+from confluence_extractor.config import Config
 
 class PageExtractor:
     def __init__(self,config: Config):

@@ -2,8 +2,8 @@
 
 import re
 import logging
-from src.config import Config
-from src.page import Page
+from confluence_extractor.config import Config
+from confluence_extractor.page import Page
 
 class DocConstructor:
     def __init__(self,config: Config, home_page: Page):

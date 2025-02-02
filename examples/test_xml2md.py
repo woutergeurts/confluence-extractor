@@ -1,6 +1,6 @@
-from src.config import Config
-from src.xml2md import Xml2Md
-from src.md2any import Md2Any
+from confluence_extractor.config import Config
+from confluence_extractor.xml2md import Xml2Md
+from confluence_extractor.md2any import Md2Any
 import logging
 
 logging.basicConfig(level=logging.DEBUG)

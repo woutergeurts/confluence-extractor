@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "src"
+name = "confluence_extractor"
 version = "0.1.0"
 description = "extract confluence pages and compose a document from them"
 authors = [ "Wouter Geurts <wouter.geurts@gmail.com>" ]
 
 license = "MIT"
 readme = "README.md"
-packages = [{include = "src"}]
+packages = [{include = "confluence_extractor"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
