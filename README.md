@@ -13,3 +13,21 @@ build scripts to
 * cat the pages to a total markdown file
 * convert to your favourite (latex) or third party required (docx) format usint pandoc
 
+## getting started
+
+### setup the config
+
+You can use poetry to setup an environment that contains all the necessary actions. This works for me ...."
+
+```
+cd <your path to confluence_extractor>
+code .
+```
+1. Open a terminal
+2. insatll lxml manually with pip, the poetry does not work
+3. (with poetry installed) poetry install
+4. ctrl-shift-P - select interpreter
+
+### test it
+in code: go to examples dir and run the test_xml2md.py, it converts the html file to md and docx (at least it should)
+

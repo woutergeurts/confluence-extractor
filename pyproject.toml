@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = "extract confluence pages and compose a document from them"
+authors = [ "Wouter Geurts <wouter.geurts@gmail.com>" ]
+
+license = "MIT"
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pypandoc = "^1.14"
+pypandoc_binary = "^1.13"
+# you need lxml, cannot be installed with poetry :-(
+atlassian-python-api = "^3.41.16"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
