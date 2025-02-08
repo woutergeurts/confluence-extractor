@@ -30,4 +30,3 @@ code .
 
 ### test it
 in code: go to examples dir and run the test_xml2md.py, it converts the html file to md and docx (at least it should)
-

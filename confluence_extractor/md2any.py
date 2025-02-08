@@ -4,19 +4,14 @@ import logging
 
 DEFAULT_DOCX_TEMPLATE = "../examples/reference.docx"
 class Md2Any:
-    def __init__(self, docx_template="", md_dir=""):
-        if docx_template:
-            self.docx_template = docx_template
-        else:
-            self.docx_template = DEFAULT_DOCX_TEMPLATE
-
+    def __init__(self, docx_template=DEFAULT_DOCX_TEMPLATE, md_dir="."):
+        self.docx_template = docx_template
         self.md_dir = md_dir    
 
     def pandoc_convert_md_to(self, output_type:str, md_filename:str):
         """ 
-        convert filename (.md file) to output_type using
-        pandoc. output file is 
-
+        convert filename (.md file) to output_type (e.g. docx) using pandoc. 
+        output file is md_filename with .md replaced by output_typ
         """
         input_file = md_filename
         output_file = input_file.replace('md', output_type)
@@ -35,6 +30,14 @@ class Md2Any:
         if output_type == "docx":
             arg = f'--reference-doc={self.docx_template}'
             extra_args.append(arg)
+        
+        # if you want to find out your pandoc version, uncomment this
+        # produces the version with a WARNING
+        #arg = f'--version'
+        #extra_args.append(arg)
+        
+        #arg = f'--log=pandoc.log'
+        #extra_args.append(arg)
 
         logging.info( f"convert input_file={input_file} to output_file={output_file} dir = {md_dir}" )
         
@@ -55,5 +58,3 @@ class Md2Any:
         """ convert md file to docx using pandoc
         """
         self.pandoc_convert_md_to("docx", md_filename)
-
-# Example usage: see examples directory
