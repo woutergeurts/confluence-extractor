@@ -1,6 +1,6 @@
 import lxml.etree as ET
 
-DEFAULT_XSL="confluence_extractor/confluence2md.xsl"
+DEFAULT_XSL="../confluence_extractor/confluence_extractor/confluence2md.xsl"
 class Xml2Md:
     def __init__(self, xslt_file=DEFAULT_XSL):
         with open(xslt_file,"br") as f:
