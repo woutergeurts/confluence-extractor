@@ -73,5 +73,6 @@ if __name__ == "__main__":
     logging.debug("services_subtree")
     services_subtree = root.find_by_id(3)
     services_subtree.log_tree()
+
     loaded_root = Page.undump("tree.json")
     loaded_root.log_tree()
