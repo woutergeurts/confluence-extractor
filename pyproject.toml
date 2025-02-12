@@ -12,7 +12,7 @@ packages = [{include = "confluence_extractor"}]
 python = "^3.11"
 pypandoc = "^1.14"
 pypandoc_binary = "^1.13"
-# you need lxml, cannot be installed with poetry :-(
+lxml = "^5.3.1"
 atlassian-python-api = "^3.41.16"
 
 [build-system]
