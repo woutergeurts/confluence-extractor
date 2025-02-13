@@ -1,10 +1,9 @@
 import pypandoc
 import os
-import pathlib
 import logging
 
 # the reference doc is situated in the directory next to the current .py file
-DEFAULT_DOCX_TEMPLATE = str(pathlib.Path(__file__))+"/reference.docx"
+DEFAULT_DOCX_TEMPLATE = str(os.path.dirname(__file__))+"/reference.docx"
 class Md2Any:
     def __init__(self, docx_template=DEFAULT_DOCX_TEMPLATE, md_dir="."):
         self.docx_template = docx_template
