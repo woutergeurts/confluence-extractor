@@ -13,8 +13,8 @@ class Page:
         self.children.append(child_page)
    
     def log_tree(self, level=0):
-        """dumps tree to debug logging the page titles hierarchically with indentation."""
-        logging.debug("  " * level + self.title)
+        """dumps tree to info logging the page titles hierarchically with indentation."""
+        logging.info("  " * level + self.title)
         for child in self.children:
             child.log_tree(level + 1)
 

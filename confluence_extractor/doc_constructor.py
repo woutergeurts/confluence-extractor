@@ -75,6 +75,7 @@ class DocConstructor:
                         logging.info(f"importing page_id={page_id}, ({title}) ({page_title})")
 
                         md.write(self.get_md_for_page(import_page,level))
+                        md.write("\n")
                
 if __name__ == "__main__":
     from config import Config

@@ -30,3 +30,16 @@ code .
 
 ### test it
 in code: go to examples dir and run the test_xml2md.py, it converts the html file to md and docx (at least it should)
+
+## use it
+
+A working setup has been created in the example dir. See the scripts
+
+```
+./example/scripts/extract_pages.py
+./example/scripts/template_to_doc.py
+```
+
+In a confluence environment a series of pages has been made and extracted. The extracted files have been formatted (they come out without newlines). 
+
+In order to use this package, you need to setup up a similar structure of directories and scripts.

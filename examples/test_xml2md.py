@@ -1,3 +1,4 @@
+import os
 from confluence_extractor.config import Config
 from confluence_extractor.xml2md import Xml2Md
 from confluence_extractor.md2any import Md2Any
@@ -6,7 +7,9 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 config = Config()
 xml2md = Xml2Md()
-extract_dir = "./examples"
+
+os.chdir("examples/scripts")
+extract_dir = config.extract_dir
 md2any = Md2Any(config.docx_template, extract_dir)
 
 xml_file = '1000000.storage.html'
