@@ -259,36 +259,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- List items -->
   <xsl:template match="acxhtml:ol/acxhtml:li | acxhtml:ul/acxhtml:li">
     <!-- Insert newline before list item, unless it is the first item of a list that is the first child of a table cell -->
-    <xsl:if test="not(.=parent::*/acxhtml:li[1] and parent::*=parent::*/parent::acxhtml:td/*[1])">
+    <xsl:if test="not(.=parent::*/acxhtml:ul[1] and .=parent::*/acxhtml:li[1] and parent::*=parent::*/parent::acxhtml:td/*[1])">
       <xsl:text>&#xa;</xsl:text>
-    </xsl:if>
-     
+    </xsl:if>    
     <xsl:variable name="prefix">
       <xsl:choose>
         <xsl:when test="parent::acxhtml:ul">* </xsl:when>
         <xsl:when test="parent::acxhtml:ol">1. </xsl:when>
      </xsl:choose>
     </xsl:variable>
-
     <xsl:variable name="level" select="count(ancestor::acxhtml:ul | ancestor::acxhtml:ol)"/>
-    
     <xsl:call-template name="repeat-repeat_string">
       <xsl:with-param name="count" select="$level" />
       <!-- 2 spaces per level -->
       <xsl:with-param name="repeat_string" select="'  '"/>
     </xsl:call-template>
-       
     <xsl:value-of select="$prefix"/>
-
     <xsl:apply-templates/>
   </xsl:template>
 
 
-  <!-- Insert newline after list (that are not nested) -->
+  <!-- Insert newline after list (that are not nested) 
   <xsl:template match="acxhtml:ol[parent::*=/*] | acxhtml:ul[parent::*=/*]">
     <xsl:apply-templates/>
     <xsl:text>&#xa;</xsl:text>
   </xsl:template>
+  -->
 
   <!-- Links -->
 
