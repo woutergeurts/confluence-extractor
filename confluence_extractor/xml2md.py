@@ -1,5 +1,6 @@
 import lxml.etree as ET
 import os 
+import re
 
 # The default xsl is part of the package and is situated next to this .py file
 DEFAULT_XSL=str(os.path.dirname(__file__))+"/confluence2md.xsl" 
@@ -9,6 +10,16 @@ class Xml2Md:
             self.xslt_content = f.read()
 
         self.xslt_tree = ET.fromstring(self.xslt_content)
+
+    def cleanup_md(md_contents: str) -> str:
+        """
+        clean up unnecessary white space (extra newlines, extra <br> in newlines)
+        input: md-string
+        returns: cleaned up string
+        """
+        text_br_removed = re.sub(r'\n\n(<br>)+', '\n\n', md_contents)
+        text_br_and_lf_removed = re.sub(r'\n\n\n+', '\n\n', text_br_removed)
+        return text_br_and_lf_removed
     
     def confluence_storage_to_md(self,storage_xml_content: str):
         """

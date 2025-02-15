@@ -4,6 +4,7 @@ import re
 import logging
 from confluence_extractor.config import Config
 from confluence_extractor.page import Page
+from confluence_extractor.xml2md import Xml2Md
 
 class DocConstructor:
     def __init__(self,config: Config, home_page: Page):
@@ -41,10 +42,10 @@ class DocConstructor:
                 self.add_md_contents(child_page,level+1)            
     
     def to_file(self,filename):
-        self.filename = filename
 
-        with open(filename, "w") as f:
-            f.write(self.md_buffer)
+        output = Xml2Md().cleanup_md(self.md_buffer)
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(output)
 
     def get_md_for_page(self, page:Page, level:int):
         if page:
