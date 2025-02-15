@@ -62,7 +62,7 @@ class DocConstructor:
          doc_constructor:include:confluence <page_id> <level> <title> => search page_id 
         """
         with open(template_path, "r") as f:
-            with open(f"{output_prefix}.md", "w") as md:
+            with open(f"{output_prefix}.md", "w", encoding="utf-8") as md:
                 lines = f.readlines()
                 for line in lines:
                     md.write(line)
