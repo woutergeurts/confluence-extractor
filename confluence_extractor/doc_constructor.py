@@ -29,7 +29,7 @@ class DocConstructor:
                 self.md_buffer += f"\n\n{md_heading_tag} [{page.title}]({confluence_url})\n\n"
             
             try:
-                with open(f"{self.config.extract_dir}/{page.page_id}.storage.md", "r") as f:
+                with open(f"{self.config.extract_dir}/{page.page_id}.storage.md", "r", encoding="utf-8") as f:
                     md_contents = f.read()
             except Exception as e:
                 logging.error( f'add_md_contents: {page.page_id} ({page.title}) not found: exception {e}')
