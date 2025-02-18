@@ -18,7 +18,7 @@ md_file = xml_file.replace('html','md')
 with open(f"{extract_dir}/{xml_file}","rb") as f:
     xml_input = f.read()
     
-output_txt = xml2md.transform(xml_input)
+output_txt = xml2md.confluence_storage_to_md(xml_input)
 
 with open(f"{extract_dir}/{md_file}", "w") as f:
     f.write(output_txt)
