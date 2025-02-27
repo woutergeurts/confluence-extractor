@@ -8,6 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 config = Config("examples/confluence_extractor.cfg")
 xml2md = Xml2Md()
+xml2xml_pandoc = Xml2Md(pandoc_processing=True)
 md2any = Md2Any(config.docx_template, config.extract_dir)
 
 # Pattern to match files
@@ -28,17 +29,31 @@ for filename in matching_files:
     logging.info(f"processing {confluence_storage_file}")
 
     try:
-        output_file = confluence_storage_file.replace( "html", "md")
         with open(confluence_storage_file,"rb") as f:
             confluence_storage_input = f.read()
     
-        output_txt = xml2md.confluence_storage_to_md(confluence_storage_input)
+        md_file = confluence_storage_file.replace( "html", "md")
+        md_text = xml2md.confluence_storage_to_md(confluence_storage_input)
     
-        with open(output_file, "wb") as f:
-            f.write(output_txt.encode())
+        with open(md_file, "wb") as f:
+            f.write(md_text.encode())
 
-        md2any.md_to_docx(output_file)
+        md2any.md_to_docx(md_file)
+
+        phtml_file = confluence_storage_file.replace( ".storage.html", ".conf-ext.html")
+        md_file = confluence_storage_file.replace( ".storage.html", ".conf-ext.md")
+        phtml_text = xml2xml_pandoc.confluence_storage_to_phtml(confluence_storage_input)
     
+        with open(phtml_file, "wb") as f:
+            f.write(phtml_text.encode())
+    
+        md_text = xml2xml_pandoc.confluence_storage_to_md(confluence_storage_input)
+            
+        with open(md_file, "wb") as f:
+            f.write(md_text.encode())
+
+        md2any.md_to_docx(md_file)
+
     except Exception as e:
         logging.error(f"An error occurred: on {confluence_storage_file} {e}")
 
