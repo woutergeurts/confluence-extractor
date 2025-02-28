@@ -8,7 +8,7 @@ import pypandoc
 DEFAULT_XSL=str(os.path.dirname(__file__))+"/confluence2md.xsl" 
 PANDOC_XSL=str(os.path.dirname(__file__))+"/confluence2phtml.xsl" 
 class Xml2Md:
-    def __init__(self, xslt_file=DEFAULT_XSL,pandoc_processing=False):
+    def __init__(self, xslt_file=DEFAULT_XSL,pandoc_processing=True):
         if pandoc_processing:
             xslt_file = PANDOC_XSL
 

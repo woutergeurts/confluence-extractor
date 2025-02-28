@@ -7,7 +7,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 config = Config("examples/confluence_extractor.cfg")
-xml2md = Xml2Md()
+xml2md = Xml2Md(pandoc_processing=False)
 xml2xml_pandoc = Xml2Md(pandoc_processing=True)
 md2any = Md2Any(config.docx_template, config.extract_dir)
 
