@@ -38,7 +38,7 @@ class Xml2Md:
         xml_content += b"</ac:confluence>"
         return xml_content
     
-    def confluence_storage_to_md(self,storage_xml_content: str):
+    def confluence_storage_to_md(self,storage_xml_content: str, pandoc_output="md"):
         """
         Transform the storage format to markdown. Note behavior is switched via the constructor
         pandoc_processing = True: pandoc is used for the transformation.
@@ -46,6 +46,7 @@ class Xml2Md:
 
         Args:
             storage_xml_content (bytes): confluence storage format as 
+            pandoc_output (default 'md' conform the function all, if you p)
 
         Returns:
             str: The transformed MD content.
@@ -55,9 +56,9 @@ class Xml2Md:
         # else:
         phtml = self.confluence_storage_to_phtml(storage_xml_content)
         try:
-            md_text = pypandoc.convert_text(phtml,format="html", to="md")
+            md_text = pypandoc.convert_text(phtml,format="html", to=pandoc_output)
         except Exception as e:
-            logging.error(f"confluence_storage_to_md: pandoc exception {e}")
+            logging.error(f"confluence_storage_to_{pandoc_output}: pandoc exception {e}")
         return md_text
     
     def confluence_storage_to_phtml(self,storage_xml_content: str):

@@ -19,6 +19,13 @@ os.chdir("./examples/scripts")
 
 # List all files in the directory
 files = os.listdir(config.extract_dir)
+#
+# debug facility: add a real life example in the extract dir and put id here
+#
+id=""
+if id:
+    files = [ f"{id}.storage.html" ]
+
 matching_files = [
     file_name for file_name in files
         if fnmatch.fnmatch(file_name, pattern)
@@ -53,6 +60,13 @@ for filename in matching_files:
             f.write(md_text.encode())
 
         md2any.md_to_docx(md_file)
+
+        json_file = confluence_storage_file.replace( "html", "json.json")
+        json_text = xml2xml_pandoc.confluence_storage_to_md(confluence_storage_input,pandoc_output="json")
+        with open(json_file, "wb") as f:
+            f.write(json_text.encode())
+
+        md2any.json_to_docx(json_file)
 
     except Exception as e:
         logging.error(f"An error occurred: on {confluence_storage_file} {e}")
