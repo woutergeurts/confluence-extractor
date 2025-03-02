@@ -23,4 +23,4 @@ for doc in doclist:
     logging.info(f"start processing: {doc} template={template_path} output_dir={output_dir}")
 
     doc_constructor.process_template(template_path, output_prefix)
-    doc_constructor.md_to_docx(f"{output_prefix}.md")
+    doc_constructor.md_to_docx(f"{output_prefix}.docx")

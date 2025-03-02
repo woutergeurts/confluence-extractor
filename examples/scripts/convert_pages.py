@@ -1,6 +1,7 @@
 from confluence_extractor.xml2md import Xml2Md
 from confluence_extractor.md2any import Md2Any
 from confluence_extractor.config import Config
+from confluence_extractor.doc_content import DocContent
 import os
 import fnmatch
 import logging
@@ -22,7 +23,7 @@ files = os.listdir(config.extract_dir)
 #
 # debug facility: add a real life example in the extract dir and put id here
 #
-id=""
+id="225713012"
 if id:
     files = [ f"{id}.storage.html" ]
 
@@ -55,18 +56,10 @@ for filename in matching_files:
             f.write(phtml_text.encode())
     
         md_text = xml2xml_pandoc.confluence_storage_to_md(confluence_storage_input)
-            
-        with open(md_file, "wb") as f:
-            f.write(md_text.encode())
+        doc_content = DocContent(config,md_text,"md")
+        docx_file = md_file.replace(".md", ".docx")
+        doc_content.format_to_file("docx",docx_file)
 
-        md2any.md_to_docx(md_file)
-
-        json_file = confluence_storage_file.replace( "html", "json.json")
-        json_text = xml2xml_pandoc.confluence_storage_to_md(confluence_storage_input,pandoc_output="json")
-        with open(json_file, "wb") as f:
-            f.write(json_text.encode())
-
-        md2any.json_to_docx(json_file)
 
     except Exception as e:
         logging.error(f"An error occurred: on {confluence_storage_file} {e}")

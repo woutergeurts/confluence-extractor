@@ -14,6 +14,7 @@ class Config:
         self.space_key = config.get('Confluence','space')
         self.extract_page_ids = config.get('Extractor','extract_page_ids').split(',')
         self.extract_dir = config.get('Extractor','extract_dir')
+        self.resource_path = config.get('Extractor','resource_path')
         self.page_tree_file = config.get('Extractor','page_tree_file')
         self.docx_template = config.get('Constructor','docx_template')
         self.ignore_label = config.get('Constructor','ignore_label')
