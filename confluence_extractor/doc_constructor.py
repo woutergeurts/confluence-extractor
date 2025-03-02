@@ -5,6 +5,7 @@ import logging
 from confluence_extractor.config import Config
 from confluence_extractor.page import Page
 from confluence_extractor.xml2md import Xml2Md
+from confluence_extractor.md2any import Md2Any
 
 class DocConstructor:
     def __init__(self,config: Config, home_page: Page):
@@ -77,6 +78,10 @@ class DocConstructor:
 
                         md.write(self.get_md_for_page(import_page,level))
                         md.write("\n")
+
+    def md_to_docx(self, filename):
+        md2any = Md2Any(self.config.docx_template, self.config.extract_dir)
+        return md2any.md_to_docx(filename)
                
 if __name__ == "__main__":
     from config import Config
