@@ -11,7 +11,7 @@ class DocContent:
         """
         self.config = config
         self.json_content = ""
-        if not doc_text:
+        if doc_text:
             self.json_content = self._input_to_json(doc_text, input_format)
 
     def _append_blocks(self, pandoc_json):
