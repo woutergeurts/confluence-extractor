@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:ac="http://www.atlassian.com/schema/confluence/4/ac/"
+  xmlns:ri="http://www.atlassian.com/schema/confluence/4/ri/"
   exclude-result-prefixes="">
    
     <!-- Macros -->
@@ -14,6 +15,17 @@
       </xsl:when> 
       </xsl:choose>
     </xsl:template>
+
+    <xsl:template match="ac:link[child::ri:page]">
+    <xsl:choose>
+      <xsl:when test="ac:plain-text-link-body">
+        <xsl:value-of select="ac:plain-text-link-body"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="ri:page/@ri:content-title"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
       
     
     
