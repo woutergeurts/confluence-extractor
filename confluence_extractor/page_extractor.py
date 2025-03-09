@@ -68,9 +68,10 @@ class PageExtractor:
                 logging.error( f'write of {page_id} ({title}) failed: exception {e}')
             
             try:
-                with open(f"{self.extract_dir}/{page_id}.storage.md", "w", encoding="utf-8") as f:
-                    f.write(self.xml2md.confluence_storage_to_md(
-                        self.clean_string(confluence_page['body']['storage']['value'])))
+                for format in ["md", "json"]:
+                    with open(f"{self.extract_dir}/{page_id}.conf-ext.{format}", "w", encoding="utf-8") as f:
+                        f.write(self.xml2md.confluence_storage_to_md(
+                            self.clean_string(confluence_page['body']['storage']['value']),format))
                     
             except Exception as e:
                 logging.error( f'md write of {page_id} ({title}) failed: exception {e}')

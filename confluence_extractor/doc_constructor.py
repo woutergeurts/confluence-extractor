@@ -5,8 +5,6 @@ import logging
 from confluence_extractor.config import Config
 from confluence_extractor.page import Page
 from confluence_extractor.doc_content import DocContent
-from confluence_extractor.xml2md import Xml2Md
-from confluence_extractor.md2any import Md2Any
 
 class DocConstructor:
     def __init__(self,config: Config, home_page: Page):
@@ -36,7 +34,7 @@ class DocConstructor:
 
             try:
                 self.doc_content.add_json_from_file(
-                    f"{self.config.extract_dir}/{page.page_id}.storage.json"
+                    f"{self.config.extract_dir}/{page.page_id}.conf-ext.json"
                     )
             except Exception as e:
                 logging.error( f'add_page_contents: {page.page_id} ({page.title}) not found: exception {e}')
@@ -51,7 +49,7 @@ class DocConstructor:
         else:
             logging.error("page not found")
    
-    def process_template(self,template_path,output_prefix):
+    def process_template(self,template_path,output_prefix=""):
         """
         Read template and act on special commands in comments:
          doc_constructor:include:confluence <page_id> <level> <title> => search page_id 
