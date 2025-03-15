@@ -1,3 +1,4 @@
+import os
 from confluence_extractor.config import Config
 import json
 import pypandoc
@@ -14,8 +15,8 @@ class DocContent:
         if doc_text:
             self.json_content = self._input_to_json(doc_text, input_format)
 
-    def _append_blocks(self, pandoc_json):
-        self.json_content['blocks'].append(pandoc_json['blocks'])
+    def _extend_blocks(self, pandoc_json):
+        self.json_content['blocks'].extend(pandoc_json['blocks'])
 
 
     def add_doc_part(self,doc_text,input_format="md"):
@@ -25,7 +26,7 @@ class DocContent:
         """
         json_content = self._input_to_json(doc_text, input_format)
         if self.json_content:
-            self._append_blocks(json_content)
+            self._extend_blocks(json_content)
         else:
             self.json_content = json_content
 
@@ -35,7 +36,7 @@ class DocContent:
         """
         with open(f"{filename}", "r") as f:
             pandoc_json = json.load(f)
-        self._append_blocks(pandoc_json)
+        self._extend_blocks(pandoc_json)
 
     def _input_to_json(self,input_content,input_format):
         try:
@@ -67,12 +68,16 @@ class DocContent:
             logging.error(f"to_text: pandoc exception {e}")
         return output
     
-    def format_to_file(self,output_format,output_file:str):
+    def format_to_file(self,output_file:str,output_format=""):
         """ 
         convert input file (file with.<input_type>) to output_type (e.g. docx) using pandoc. 
+        default output format is the file extension so: foo.docx will be put to docx. if for a reason it is needed to write docx to .zip, use the second argument
         output file is md_filename with input_type replaced by output_type
         """
-        json_file = output_file.replace(f".{output_format}", ".json")
+        file_extension = os.path.splitext(output_file)[1]
+        if not output_format:
+            output_format = file_extension[1:]
+        json_file = output_file.replace(f"{file_extension}", ".json")
         self.to_json(json_file)
 
         extra_args = []
@@ -94,7 +99,7 @@ class DocContent:
         logging.info( f"convert json file to output_file={output_file}" )
         
         try:
-            output = pypandoc.convert_file(json_file, output_format, 
+            output = pypandoc.convert_file(json_file, to=output_format,
                                     outputfile=output_file,
                                     extra_args=extra_args)
             if output:
