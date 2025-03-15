@@ -10,12 +10,13 @@
 
 XSLT 1.0 stylesheet.
 
-Transforms Confluence XML into wiki markup.
+Transforms Confluence XML into markup markup.
 
-Last updated 2012-06-01.
+Last updated 2025-02-26.
 
 Developed by Graham Hannington <graham_hannington@fundi.com.au>
 (Confluence user; no other affiliation with Atlassian).
+modified by Wouter Geurts <wouter.geurts@gmail.com>
 
 Distributed under the BSD 2-Clause license
 (also known as the Simplified BSD license):

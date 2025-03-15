@@ -1,5 +1,4 @@
 import os
-from confluence_extractor.md2any import Md2Any
 from confluence_extractor.config import Config
 from confluence_extractor.page import Page
 from confluence_extractor.doc_constructor import DocConstructor
@@ -16,8 +15,6 @@ template_dir="../doc-templates"
 output_dir="../results"
 doclist = [ "Architecture", "Maintenance" ]
 
-md2any = Md2Any(config.docx_template, config.extract_dir)
-
 home_page.log_tree()
 
 for doc in doclist:
@@ -26,4 +23,4 @@ for doc in doclist:
     logging.info(f"start processing: {doc} template={template_path} output_dir={output_dir}")
 
     doc_constructor.process_template(template_path, output_prefix)
-    md2any.md_to_docx(f"{output_prefix}.md")
+    doc_constructor.md_to_docx(f"{output_prefix}.docx")
