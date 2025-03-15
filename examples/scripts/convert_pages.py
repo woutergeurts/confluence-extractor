@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 config = Config("examples/confluence_extractor.cfg")
 xml2md = Xml2Md(pandoc_processing=False)
-xml2xml_pandoc = Xml2Md(pandoc_processing=True)
+xml2xml_pandoc = Xml2Md()
 md2any = Md2Any(config.docx_template, config.extract_dir)
 
 # Pattern to match files
@@ -23,7 +23,7 @@ files = os.listdir(config.extract_dir)
 #
 # debug facility: add a real life example in the extract dir and put id here
 #
-id="225713012"
+id=""
 if id:
     files = [ f"{id}.storage.html" ]
 
