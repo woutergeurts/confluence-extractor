@@ -9,7 +9,6 @@ config = Config("./examples/confluence_extractor.cfg")
 
 os.chdir("examples/scripts")
 home_page = Page.undump(config.page_tree_file)
-doc_constructor = DocConstructor(config, home_page)
 
 template_dir="../doc-templates"
 output_dir="../results"
@@ -18,6 +17,7 @@ doclist = [ "Architecture", "Maintenance" ]
 home_page.log_tree()
 
 for doc in doclist:
+    doc_constructor = DocConstructor(config, home_page)
     template_path=f"{template_dir}/example_{doc}_template.md"
     output_prefix=f"{output_dir}/{doc}"
     logging.info(f"start processing: {doc} template={template_path} output_dir={output_dir}")

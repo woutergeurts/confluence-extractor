@@ -23,7 +23,7 @@ files = os.listdir(config.extract_dir)
 #
 # debug facility: add a real life example in the extract dir and put id here
 #
-id=""
+id="1000000"
 if id:
     files = [ f"{id}.storage.html" ]
 
@@ -58,7 +58,7 @@ for filename in matching_files:
         md_text = xml2xml_pandoc.confluence_storage_to_md(confluence_storage_input)
         doc_content = DocContent(config,md_text,"md")
         docx_file = md_file.replace(".md", ".docx")
-        doc_content.format_to_file("docx",docx_file)
+        doc_content.to_docx(docx_file)
 
 
     except Exception as e:

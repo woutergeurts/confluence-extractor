@@ -9,10 +9,11 @@
       <xsl:variable name="macro" select="@ac:name"/>
       <xsl:choose>
         <xsl:when test="$macro='code'">
-          <code>
-            <xsl:apply-templates/>
-          </code>
+          <pre><code><xsl:apply-templates/></code></pre>
       </xsl:when> 
+      <xsl:otherwise>
+        <xsl:comment> removed macro: name=<xsl:value-of select="@ac:name"/></xsl:comment>
+      </xsl:otherwise>
       </xsl:choose>
     </xsl:template>
 
@@ -26,12 +27,11 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <!-- remove untreated parameters -->    
+  <xsl:template match="ac:parameter"/>
       
-    
-    
-    
-    
-     <!-- treatment of strurcture macros-->
+     <!-- deal with drawio: insert the png attachement -->
     <xsl:template name="ac:structured-macro-drawio">
     <img>
       <xsl:attribute name="src">
@@ -41,25 +41,15 @@
     </xsl:template>
 
     <!-- status: only take 'title'-->
-
     <xsl:template name="ac:structured-macro-status">
     <xsl:value-of select="ac:parameter[@ac:name='title']"/>
     </xsl:template>
 
     <xsl:template match="ac:structured-macro">
     <xsl:choose>
-    <!-- 
-     
-
       <xsl:when test="@ac:name='code'">
-        <xsl:call-template name="ac:structured-macro-code"></xsl:call-template>
+        <pre><code><xsl:apply-templates/></code></pre>
       </xsl:when> 
-      <xsl:when test="@ac:name='details'">
-        <xsl:call-template name="ac:structured-macro-details"></xsl:call-template>
-      </xsl:when> 
-
-      <xsl:when test="@ac:name='info' or @ac:name='warning' or @ac:name='jira'"/> 
-      --> 
       <xsl:when test="@ac:name='drawio'">
         <xsl:call-template name="ac:structured-macro-drawio"></xsl:call-template>
       </xsl:when>
@@ -81,11 +71,10 @@
     </xsl:choose>
   </xsl:template>
 
-    <!-- Identiteitstransformatie: behoudt alles zoals het is -->
+    <!-- keep everything else -->
   <xsl:template match="@*|node()">
       <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
       </xsl:copy>
   </xsl:template>
-  
 </xsl:stylesheet>
