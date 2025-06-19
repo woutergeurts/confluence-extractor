@@ -15,7 +15,8 @@ class PageExtractor:
         
         self.confluence = Confluence(
            url=f"{base_url}/confluence",
-           token=confluence_token)
+           token=confluence_token,
+           verify_ssl = false)
         
         self.xml2md = Xml2Md()
           
@@ -86,4 +87,4 @@ class PageExtractor:
         children = self.confluence.get_child_pages(page_id)
         for child in children:
             child_id = child["id"]
-            self.add_page(page,child_id,extract_files,extract_attachments)                    
+            self.add_page(page,child_id,extract_files,extract_attachments)
