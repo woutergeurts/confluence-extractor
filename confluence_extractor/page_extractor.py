@@ -7,7 +7,7 @@ from confluence_extractor.page import Page
 from confluence_extractor.config import Config
 
 class PageExtractor:
-    def __init__(self,config: Config):
+    def __init__(self,config: Config, verify_ssl=True):
         base_url = config.base_url
         confluence_token = config.confluence_token
         self.space_key = config.space_key
@@ -16,7 +16,7 @@ class PageExtractor:
         self.confluence = Confluence(
            url=f"{base_url}/confluence",
            token=confluence_token,
-           verify_ssl = false)
+           verify_ssl = verify_ssl)
         
         self.xml2md = Xml2Md()
           
