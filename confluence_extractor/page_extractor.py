@@ -44,7 +44,7 @@ class PageExtractor:
         # txt = txt.replace('\u2192',"&rarr;") # ->
         #txt = txt.replace('\u2003',"U2003")
         txt = txt.replace("\u00A0"," ")
-        txt = replace_image_tag_by_sourcefile(txt)
+        txt = self.replace_image_tag_by_sourcefile(txt)
         return(txt)
  
    
