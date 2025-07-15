@@ -1,4 +1,5 @@
 # info in https://atlassian-python-api.readthedocs.io/
+import re
 from atlassian import Confluence
 import logging
 
@@ -19,7 +20,18 @@ class PageExtractor:
            verify_ssl = verify_ssl)
         
         self.xml2md = Xml2Md()
-          
+    
+    def replace_image_tag_by_sourcefile(self, phtml: str) -> str:
+        # Replace <ac:image><ri:attachment ri:filename="..."/></ac:image> with <img src="..."/>
+
+        #example input: <p><ac:image><ri:attachment ri:filename="image-2025-7-10_12-5-25.png"/></ac:image></p>
+        #example output: <p><img xmlns="" src="image-2025-7-10_12-5-25.png"/></p>
+        return re.sub(
+            r'<ac:image>\s*<ri:attachment\s+ri:filename="([^"]+)"\s*/>\s*</ac:image>',
+            r'<img src="\1"/>',
+            phtml
+        )
+
     def clean_string(self,txt:str):
         """
         Replace unicode strings that mess with libraries
@@ -32,6 +44,7 @@ class PageExtractor:
         # txt = txt.replace('\u2192',"&rarr;") # ->
         #txt = txt.replace('\u2003',"U2003")
         txt = txt.replace("\u00A0"," ")
+        txt = replace_image_tag_by_sourcefile(txt)
         return(txt)
  
    
