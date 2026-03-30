@@ -28,6 +28,40 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="ac:image">
+    <img>
+      <xsl:attribute name="src">
+        <xsl:choose>
+          <xsl:when test="ri:url">
+            <xsl:value-of select="ri:url/@ri:value"/>
+          </xsl:when>
+          <xsl:when test="ri:attachment">
+            <xsl:text>./</xsl:text>
+            <xsl:value-of select="ri:attachment/@ri:filename"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:attribute>
+  
+      <xsl:if test="@ac:width">
+        <xsl:attribute name="width">
+          <xsl:value-of select="@ac:width"/>
+        </xsl:attribute>
+      </xsl:if>
+  
+      <xsl:if test="@ac:height">
+        <xsl:attribute name="height">
+          <xsl:value-of select="@ac:height"/>
+        </xsl:attribute>
+      </xsl:if>
+  
+      <xsl:if test="ri:attachment/@ri:filename">
+        <xsl:attribute name="alt">
+          <xsl:value-of select="ri:attachment/@ri:filename"/>
+        </xsl:attribute>
+      </xsl:if>
+    </img>
+  </xsl:template>
+
   <!-- remove untreated parameters -->    
   <xsl:template match="ac:parameter"/>
       
