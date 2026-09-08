@@ -24,7 +24,7 @@ cd <your path to confluence_extractor>
 code .
 ```
 1. Open a terminal
-2. insatll lxml manually with pip, the poetry does not work
+2. install lxml manually with pip, the poetry does not work
 3. (with poetry installed) poetry install
 4. ctrl-shift-P - select interpreter
 
