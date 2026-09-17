@@ -55,7 +55,7 @@ class DocConstructor:
          doc_constructor:include:confluence <page_id> <level> <title> => search page_id 
         """
         md_buffer = "" 
-        with open(template_path, "r") as f:
+        with open(template_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
             for line in lines:
                 md_buffer += line

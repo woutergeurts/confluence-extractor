@@ -24,12 +24,19 @@ cd <your path to confluence_extractor>
 code .
 ```
 1. Open a terminal
-2. insatll lxml manually with pip, the poetry does not work
-3. (with poetry installed) poetry install
+2. (with poetry installed) poetry install
+3. poetry run pip install lxml # install lxml manually with pip, the poetry does not work
 4. ctrl-shift-P - select interpreter
 
 ### test it
-in code: go to examples dir and run the test_xml2md.py, it converts the html file to md and docx (at least it should)
+From the repository root, run the example conversion script:
+
+```powershell
+poetry run python examples/test_html2docx.py
+```
+
+The script converts `examples/extract/1000000.storage.html` to Markdown and
+DOCX files in `examples/extract`.
 
 ## use it
 
@@ -42,4 +49,8 @@ A working setup has been created in the example dir. See the scripts
 
 In a confluence environment a series of pages has been made and extracted. The extracted files have been formatted (they come out without newlines). 
 
+<<<<<<< HEAD
 In order to use this package, you need to setup up a similar structure of directories and scripts.
+=======
+In order to use this package, you need to setup up a similar structure of directories and scripts.
+>>>>>>> origin/main
