@@ -15,7 +15,7 @@ md2any = Md2Any(config.docx_template, extract_dir)
 xml_file = '1000000.storage.html'
 md_file = xml_file.replace('html','md')
 
-with open(f"{extract_dir}/{xml_file}","rb", encoding="utf-8") as f:
+with open(f"{extract_dir}/{xml_file}","r", encoding="utf-8") as f:
     xml_input = f.read()
     
 output_txt = xml2md.transform_confluence_storage(xml_input)

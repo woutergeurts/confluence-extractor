@@ -29,7 +29,14 @@ code .
 4. ctrl-shift-P - select interpreter
 
 ### test it
-in code: go to examples dir and run the test_xml2md.py, it converts the html file to md and docx (at least it should)
+From the repository root, run the example conversion script:
+
+```powershell
+poetry run python examples/test_html2docx.py
+```
+
+The script converts `examples/extract/1000000.storage.html` to Markdown and
+DOCX files in `examples/extract`.
 
 ## use it
 
