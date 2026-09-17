@@ -49,4 +49,8 @@ A working setup has been created in the example dir. See the scripts
 
 In a confluence environment a series of pages has been made and extracted. The extracted files have been formatted (they come out without newlines). 
 
+<<<<<<< HEAD
 In order to use this package, you need to setup up a similar structure of directories and scripts.
+=======
+In order to use this package, you need to setup up a similar structure of directories and scripts.
+>>>>>>> origin/main
