@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "confluence_extractor"
-version = "0.1.0"
+version = "0.1.1"
 description = "extract confluence pages and compose a document from them"
 authors = [ "Wouter Geurts <wouter.geurts@gmail.com>" ]
 
