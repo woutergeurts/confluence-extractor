@@ -19,4 +19,6 @@ for page_id in config.extract_page_ids:
 
 home_page.log_tree()        
 home_page.dump(config.page_tree_file)
+index_file = os.path.join(os.path.dirname(config.page_tree_file), "index.md")
+home_page.write_index(index_file)
 os.chdir(old_wd)

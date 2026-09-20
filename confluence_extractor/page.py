@@ -1,10 +1,24 @@
 import json
 import logging
+import re
+
+
+def title_to_md_filename(title: str) -> str:
+    """Convert a page title to a safe Markdown filename."""
+    filename = re.sub(r"\s+", "-", title.strip())
+    filename = re.sub(r'[<>:"/\\|?*\[\]()#\x00-\x1f]', "-", filename)
+    filename = re.sub(r"-+", "-", filename).strip(" .-")
+    if not filename:
+        filename = "untitled"
+    if filename.upper() in {"CON", "PRN", "AUX", "NUL", "COM1", "LPT1"}:
+        filename = f"_{filename}"
+    return f"{filename}.md"
 
 class Page:
-    def __init__(self, page_id, title:str, labels=None):
+    def __init__(self, page_id, title:str, labels=None, md_file=None):
         self.page_id = page_id
         self.title = title
+        self.md_file = md_file or title_to_md_filename(title)
         self.labels = set(labels) if labels else set()
         self.children = []
 
@@ -34,17 +48,42 @@ class Page:
             return {
                 "page_id": page.page_id,
                 "title": page.title,
+                "md_file": page.md_file,
                 "labels": list(page.labels),
                 "children": [serialize(child) for child in page.children]
             }
         with open(filename, "w") as f:
             json.dump(serialize(self), f, indent=4)
+
+    def write_index(self, filename):
+        """Write a Markdown index linking to every page in the tree."""
+        lines = []
+
+        def add_page(page, level, link_page=True):
+            heading = "#" * level
+            if link_page:
+                lines.append(f"{heading} [{page.title}]({page.md_file})")
+            else:
+                lines.append(f"{heading} {page.title}")
+            lines.append("")
+            for child in page.children:
+                add_page(child, level + 1)
+
+        # The root created by the extraction script is a synthetic container.
+        add_page(self, 1, link_page=False)
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
     
     @staticmethod
     def undump(filename):
         """Reads the tree from a file."""
         def deserialize(data):
-            page = Page(data["page_id"], data["title"], data["labels"])
+            page = Page(
+                data["page_id"],
+                data["title"],
+                data.get("labels"),
+                data.get("md_file"),
+            )
             page.children = [deserialize(child) for child in data["children"]]
             return page
         with open(filename, "r") as f:

@@ -1,4 +1,5 @@
 # info in https://atlassian-python-api.readthedocs.io/
+import os
 import re
 from atlassian import Confluence
 import logging
@@ -55,6 +56,64 @@ class PageExtractor:
             label_list.append(result['name'])
 
         return label_list
+
+    def download_diagram_sources(self, page_id, storage_html):
+        """Download labelled Draw.io sources as ``<name>.drawio`` files."""
+        diagram_names = re.findall(
+            r'<ac:parameter\s+ac:name=["\']diagramName["\'][^>]*>([^<]+)</ac:parameter>',
+            storage_html,
+        )
+
+        attachments = []
+        start = 0
+        limit = 50
+        while True:
+            response = self.confluence.get_attachments_from_content(
+                page_id,
+                start=start,
+                limit=limit,
+                expand="metadata.labels",
+            )
+            page_attachments = response.get("results", [])
+            attachments.extend(page_attachments)
+            if len(page_attachments) < limit:
+                break
+            start += limit
+
+        for diagram_name in dict.fromkeys(name.strip() for name in diagram_names):
+            if not diagram_name:
+                continue
+            if diagram_name.lower().endswith(".png"):
+                diagram_name = diagram_name[:-4]
+            source = next(
+                (
+                    attachment
+                    for attachment in attachments
+                    if attachment.get("title") == diagram_name
+                    and "drawio" in {
+                        label.get("name")
+                        for label in attachment.get("metadata", {})
+                        .get("labels", {})
+                        .get("results", [])
+                    }
+                ),
+                None,
+            )
+            drawio_filename = f"{diagram_name}.drawio"
+            if source is None:
+                logging.warning(
+                    "Labelled Draw.io source %s was not found for page %s",
+                    drawio_filename,
+                    page_id,
+                )
+                continue
+
+            response = self.confluence.get(
+                source["_links"]["download"],
+                not_json_response=True,
+            )
+            with open(os.path.join(self.extract_dir, drawio_filename), "wb") as f:
+                f.write(response)
     
     def add_page(self,parent_page:Page,page_id,extract_files=False,extract_attachments=False):
                   
@@ -82,8 +141,12 @@ class PageExtractor:
                 logging.error( f'write of {page_id} ({title}) failed: exception {e}')
             
             try:
-                for format in ["md", "json"]:
-                    with open(f"{self.extract_dir}/{page_id}.conf-ext.{format}", "w", encoding="utf-8") as f:
+                output_files = {
+                    "md": page.md_file,
+                    "json": f"{page_id}.conf-ext.json",
+                }
+                for format, filename in output_files.items():
+                    with open(f"{self.extract_dir}/{filename}", "w", encoding="utf-8") as f:
                         f.write(self.xml2md.confluence_storage_to_md(
                             self.clean_string(confluence_page['body']['storage']['value']),format))
                     
@@ -93,7 +156,11 @@ class PageExtractor:
         if extract_attachments:
             try: 
                 self.confluence.download_attachments_from_page(page_id, self.extract_dir)
-                                                    
+                self.download_diagram_sources(
+                    page_id,
+                    confluence_page['body']['storage']['value'],
+                )
+
             except Exception as e:
                 logging.error( f'download van attachments of {page_id} ({title}) failed: exception {e}')
 
