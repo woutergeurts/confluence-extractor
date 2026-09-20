@@ -18,5 +18,5 @@ Document identificator: Maintenance
 
 This example shows how a complete document can be build up from a confluence structure
 
-<!-- doc_constructor:include:confluence 262826368  1 title -->
+<!-- doc_constructor:include:confluence <pageId>  1 title -->
 

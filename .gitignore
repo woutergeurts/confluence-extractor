@@ -1,3 +1,6 @@
+examples/extract_test/*
+examples/doc-templates/example_test_template.md
+examples/results/*
 *.json
 *.lock
 # Byte-compiled / optimized / DLL files

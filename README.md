@@ -40,6 +40,7 @@ DOCX files in `examples/extract`.
 
 ## use it
 
+### general
 A working setup has been created in the example dir. See the scripts
 
 ```
@@ -49,8 +50,18 @@ A working setup has been created in the example dir. See the scripts
 
 In a confluence environment a series of pages has been made and extracted. The extracted files have been formatted (they come out without newlines). 
 
-<<<<<<< HEAD
 In order to use this package, you need to setup up a similar structure of directories and scripts.
-=======
-In order to use this package, you need to setup up a similar structure of directories and scripts.
->>>>>>> origin/main
+
+### steps TODO TEST
+
+1. copy example_confluence_extractor.cfg to confluence_extractor.cfg
+2. fill it out with your connection details
+    1. it is good practice to change 'extract' to 'extract_test'
+    2. this dir is already excluded in .gitignore
+    3. mkdir test_extract 
+3. choose a page within your space to be used and add a pageid in the cfg
+4. test it: (poetry run python examples/scripts/extract_pages.py) 
+5. copy example_Architecture_template.md to example_test_template.md
+6. modify test_template.md: insert your pageid of point 3
+7. mkdir example/results (if not present)
+8. test it: (poetry run python examples/scripts/template_to_doc.py)

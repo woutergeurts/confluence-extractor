@@ -12,13 +12,14 @@ home_page = Page.undump(config.page_tree_file)
 
 template_dir="../doc-templates"
 output_dir="../results"
-doclist = [ "Architecture", "Maintenance" ]
+#doclist = [ "example_Architecture", "example_Maintenance" ]
+doclist = [ "example_test" ]
 
 home_page.log_tree()
 
 for doc in doclist:
     doc_constructor = DocConstructor(config, home_page)
-    template_path=f"{template_dir}/example_{doc}_template.md"
+    template_path=f"{template_dir}/{doc}_template.md"
     output_prefix=f"{output_dir}/{doc}"
     logging.info(f"start processing: {doc} template={template_path} output_dir={output_dir}")
 
