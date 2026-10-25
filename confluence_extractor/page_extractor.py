@@ -63,7 +63,7 @@ class PageExtractor:
             r'<ac:parameter\s+ac:name=["\']diagramName["\'][^>]*>([^<]+)</ac:parameter>',
             storage_html,
         )
-        logging.debug("download_diagram_sources: diagram names: " + diagram_names)
+        logging.debug("download_diagram_sources: diagram names: %s", diagram_names)
 
         attachments = []
         start = 0
