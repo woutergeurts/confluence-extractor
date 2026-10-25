@@ -10,8 +10,6 @@ def title_to_md_filename(title: str) -> str:
     filename = re.sub(r"-+", "-", filename).strip(" .-")
     if not filename:
         filename = "untitled"
-    if filename.upper() in {"CON", "PRN", "AUX", "NUL", "COM1", "LPT1"}:
-        filename = f"_{filename}"
     return f"{filename}.md"
 
 class Page:

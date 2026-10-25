@@ -7,6 +7,7 @@ import pypandoc
 # The default xsl is part of the package and is situated next to this .py file
 DEFAULT_XSL=str(os.path.dirname(__file__))+"/confluence2md.xsl" 
 PANDOC_XSL=str(os.path.dirname(__file__))+"/confluence2phtml.xsl" 
+PANDOC_FILTER=str(os.path.dirname(__file__))+"/filters/unwrap_content_wrapper.lua"
 class Xml2Md:
     def __init__(self, xslt_file=DEFAULT_XSL,pandoc_processing=True):
         if pandoc_processing:
@@ -46,7 +47,19 @@ class Xml2Md:
         # else:
         phtml = self.confluence_storage_to_phtml(storage_xml_content)
         try:
-            md_text = pypandoc.convert_text(phtml,format="html", to=pandoc_output)
+            extra_args = [
+                f"--lua-filter={PANDOC_FILTER}",
+            ]
+            if pandoc_output == "md":
+                # Avoid line wrapping that can make tables harder for editors
+                # to parse and review.
+                extra_args.append("--wrap=none")
+            md_text = pypandoc.convert_text(
+                phtml,
+                format="html",
+                to=pandoc_output,
+                extra_args=extra_args,
+            )
         except Exception as e:
             logging.error(f"confluence_storage_to_{pandoc_output}: pandoc exception {e}")
         return md_text

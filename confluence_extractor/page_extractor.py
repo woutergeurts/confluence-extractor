@@ -58,11 +58,12 @@ class PageExtractor:
         return label_list
 
     def download_diagram_sources(self, page_id, storage_html):
-        """Download labelled Draw.io sources as ``<name>.drawio`` files."""
+        """Download labelled Draw.io sources of the <name>.png files as ``<name>.drawio`` files."""
         diagram_names = re.findall(
             r'<ac:parameter\s+ac:name=["\']diagramName["\'][^>]*>([^<]+)</ac:parameter>',
             storage_html,
         )
+        logging.debug("download_diagram_sources: diagram names: " + diagram_names)
 
         attachments = []
         start = 0
