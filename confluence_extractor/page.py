@@ -40,7 +40,7 @@ class Page:
                 return found
         return None
     
-    def dump(self, filename):
+    def dump_tree(self, filename):
         """Dumps the tree to a file."""
         def serialize(page):
             return {
@@ -53,7 +53,7 @@ class Page:
         with open(filename, "w") as f:
             json.dump(serialize(self), f, indent=4)
 
-    def write_index(self, filename):
+    def dump_index(self, filename):
         """Write a Markdown index linking to every page in the tree."""
         lines = []
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     logging.debug("home_tree")
     root.log_tree()
-    root.dump("tree.json")
+    root.dump_tree("tree.json")
     
     logging.debug("services_subtree")
     services_subtree = root.find_by_id(3)
