@@ -64,7 +64,7 @@ In a confluence environment a series of pages has been made and extracted. The e
 
 In order to use this package, you need to setup up a similar structure of directories and scripts.
 
-### steps TODO TEST
+### steps 
 
 1. copy example_confluence_extractor.cfg to confluence_extractor.cfg
 2. fill it out with your connection details
@@ -77,3 +77,4 @@ In order to use this package, you need to setup up a similar structure of direct
 6. modify test_template.md: insert your pageid of point 3
 7. mkdir example/results (if not present)
 8. test it: (poetry run python examples/scripts/template_to_doc.py)
+In order to use this package, you need to setup up a similar structure of directories and scripts.
