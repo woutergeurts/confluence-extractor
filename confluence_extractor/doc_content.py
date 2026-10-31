@@ -34,7 +34,7 @@ class DocContent:
         """
         add the json in the file to the main document (append the block section)
         """
-        with open(f"{filename}", "r") as f:
+        with open(f"{filename}", "r", encoding="utf-8") as f:
             pandoc_json = json.load(f)
         self._extend_blocks(pandoc_json)
 
