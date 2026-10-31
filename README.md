@@ -36,7 +36,19 @@ poetry run python examples/test_html2docx.py
 ```
 
 The script converts `examples/extract/1000000.storage.html` to Markdown and
-DOCX files in `examples/extract`.
+DOCX files in `examples/extract`. The Markdown conversion applies the
+`confluence_extractor/filters/unwrap_content_wrapper.lua` Pandoc filter. This
+removes Confluence's presentational `content-wrapper` divs, so the generated
+Markdown does not contain Pandoc fenced-div markers such as `:::` and remains
+readable by Visual Studio and other standard Markdown editors.
+
+The same conversion is used when extracting pages with
+`examples/scripts/extract_pages.py`. To run that workflow after configuring
+`examples/confluence_extractor.cfg`:
+
+```powershell
+poetry run python examples/scripts/extract_pages.py
+```
 
 ## use it
 
