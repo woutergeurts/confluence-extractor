@@ -18,7 +18,7 @@ Document identificator: Architecture
 
 You can add text what you like and and import tree's of confluence pages with 
 
-<!-- doc_constructor:include:confluence 262826365  3 title -->
+<!-- doc_constructor:include:confluence <pageId>  3 title -->
 
 note that in the comment, the title is not used (yet).
 

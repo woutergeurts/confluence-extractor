@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO )
 
 # construct this page with your own pointer to confluence!
 config = Config("examples/confluence_extractor.cfg")
-extractor = PageExtractor(config,False)
+extractor = PageExtractor(config)
 home_page = Page(0, "home")
 
 old_wd = os.getcwd()
@@ -18,5 +18,6 @@ for page_id in config.extract_page_ids:
     extractor.add_page(home_page, page_id, True,True)
 
 home_page.log_tree()        
-home_page.dump(config.page_tree_file)
+home_page.dump_tree(config.page_tree_file)
+home_page.dump_index(config.page_index_file)
 os.chdir(old_wd)
